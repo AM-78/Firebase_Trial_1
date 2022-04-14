@@ -55,7 +55,9 @@
       await setDoc(ref, {
         Name: namebox.value,
         Text: textbox.value
-      });
+      })
+      .then(() => {alert("Submitted")})
+      .catch((error) => {alert("Error: " + error)});
 
 
       // console.log(count);
