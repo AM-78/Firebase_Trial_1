@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Firebasic</title>
+  </head>
+  <body>
+    <label>Name:</label>
+    <input type="text" id="NameBox" name="nameinp" size=30> <br> 
+
+    <label>Enter Some Text.....</label> <br>
+    <textarea  id="TextBox" cols="30" rows="10"></textarea><br>
+    <button id="button">SUBMIT</button>
+  <!-- <script type="text/javascript" src="index.js"> </script> -->
+
+  <!-- <script type="module" src="index.js"> -->
+    <script type="module">
+          // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+  
+    import { getFirestore, doc, setDoc, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyACfZ9QZ4C1CHq5r3YhT_EVNTo3zwvdu5k",
+      authDomain: "trial-4bbe0.firebaseapp.com",
+      databaseURL: "https://trial-4bbe0-default-rtdb.firebaseio.com",
+      projectId: "trial-4bbe0",
+      storageBucket: "trial-4bbe0.appspot.com",
+      messagingSenderId: "312488833893",
+      appId: "1:312488833893:web:1210978ef527557d2ea78c",
+      measurementId: "G-NPVHE0P4CW"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // Creating References for Inputs
+    let submitbutton = document.getElementById("button");
+    submitbutton.addEventListener("click", submitfunction)
+
+    let namebox = document.getElementById("NameBox");
+    let textbox = document.getElementById("TextBox");
+
+    async function submitfunction(){
+
+      const countRef = doc(db, "Name_Text", "CounterDoc");
+      const countSnap = await getDoc(countRef);
+      var count = Number(countSnap.data().Counter);
+      count++;
+      console.log(count);
+      await updateDoc(countRef, {Counter:count});
+
+      const ref = doc(db, "Name_Text", count.toString());
+      await setDoc(ref, {
+        Name: namebox.value,
+        Text: textbox.value
+      });
+
+
+      // console.log(count);
+      // console.log(namebox.value);
+      // console.log(textbox.value);
+ 
+      // newDoc();
+    }
+
+
+    </script>
+
+    <script>
+ 
+    </script>
+  </body>
+
+
+</html>
